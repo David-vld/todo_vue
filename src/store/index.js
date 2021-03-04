@@ -10,7 +10,6 @@ export default new Vuex.Store({
 
 		]
 	},
-
 	mutations: {
 		ajouterListe(state, todo) {
 			state.todos.push(todo);
@@ -52,13 +51,19 @@ export default new Vuex.Store({
 		},
 
 		async EDIT_TODO(store, id) {
-			let message = prompt("Modifier le todo")
-			let color = prompt("Modifier la couleur")
-			let response = await Axios.put(`http://localhost:3000/api/todo/put/${id}`,{
-				content : message,
-				color : color
-			});
-			store.commit('EDIT_TODO', response.data)
+			try {
+				let message = prompt("Modifier le todo")
+				let color = prompt("Modifier la couleur")
+				let response = await Axios.put(`http://localhost:3000/api/todo/put/${id}`,{
+					content : message,
+					color : color
+				});
+				store.commit('EDIT_TODO', response.data)
+			}
+			catch (error) {
+				if (error.response && error.response.status === 404)
+					return alert("Le todo n'a pas été trouvé");
+			}
 		}
 	},
 })

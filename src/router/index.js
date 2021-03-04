@@ -8,21 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about/1',
-    component: () => import('../components/HelloWorldA.vue')
-  },
-
-  {
-    path: '/about/2',
-    component: () => import('../components/HelloWorldB.vue')
-  },
-  {
-    path: '/about/:id([\\d+a-d])',
-    name: 'About',
-    component: () => import('../views/About.vue')
+    component: Home,
   },
 ]
 const router = new VueRouter({
