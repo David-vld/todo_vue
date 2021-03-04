@@ -25,12 +25,12 @@ export default new Vuex.Store({
 			state.todos.splice(index, 1)
 		},
 
-		EDIT_TODO(state, id) {
-			const todo = state.todos.find(todo => todo.id === id);
-			console.log(todo.content)
-			let newContent
-			todo.content = newContent
-		}
+		EDIT_TODO(state, todo) {
+            let index = state.todos.find(message => message.id === todo.id);
+			index.content = todo.content
+			index.color = todo.color
+			console.log(todo.color)
+        }
 	},
 
 	actions: {
@@ -39,10 +39,11 @@ export default new Vuex.Store({
 			store.commit('SET_TODOS', response.data);
 		},
 
-		async ADD_TODO(store, message) {
+		async ADD_TODO(store, message, color) {
 			let response = await Axios.post('http://localhost:3000/api/todos/', {
-				content : message
-			}); store.commit('ajouterListe', response.data);
+				content : message,
+				color : color
+			}); store.commit('ajouterListe', response.data, color);
 		},
 
 		async DELETE_TODO(store, id) {
@@ -50,11 +51,14 @@ export default new Vuex.Store({
 			store.commit('DELETE_TODO', id);
 		},
 
-		async EDIT_TODO(store, id, newContent) {
+		async EDIT_TODO(store, id) {
+			let message = prompt("Modifier le todo")
+			let color = prompt("Modifier la couleur")
 			let response = await Axios.put(`http://localhost:3000/api/todo/put/${id}`,{
-				content : newContent
+				content : message,
+				color : color
 			});
-			store.commit('EDIT_TODO', id, response.data)
+			store.commit('EDIT_TODO', response.data)
 		}
 	},
 })

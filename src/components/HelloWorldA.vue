@@ -5,7 +5,8 @@
     <ol>
         <li v-for="todo in todos"
         :key="todo.id">
-        {{ todo.content }}<input type="submit" value="Suprimer" @click="DELETED_TODO(todo.id)"><input type="submit" value="Modifier" @click="EDIT_TODO(todo.id)">
+        {{ todo.content }}<input type="submit" value="Suprimer" @click="DELETED_TODO(todo.id)">
+        <input type="submit" value="Modifier" @click="EDIT_TODO(todo.id)">
         </li>
     </ol>
     <input v-model="message" value="message">
